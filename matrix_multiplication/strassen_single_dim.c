@@ -263,7 +263,7 @@ static void strassen(float *mat_a, float *mat_b, float *mat_c, unsigned int matr
 			// M1 = (A11 + A22) * (B11 + B22)
 			m1 = &p[2 * n*n];
 			sum_single_dim(a11, a22, &p[0], n, stride_a, stride_a, n);
-			subtract_single_dim(b11, b22, &p[n*n], n, stride_b, stride_b, n);
+			sum_single_dim(b11, b22, &p[n*n], n, stride_b, stride_b, n);
 			strassen(&p[0], &p[n*n], m1, n, n, n, n);
 		}
 
@@ -276,7 +276,7 @@ static void strassen(float *mat_a, float *mat_b, float *mat_c, unsigned int matr
 		{
 			// M2 = (A21 + A22) * B11
 			m2 = &p[4 * n*n];
-			subtract_single_dim(a21, a22, &p[3 * n*n], n, stride_a, stride_a, n);
+			sum_single_dim(a21, a22, &p[3 * n*n], n, stride_a, stride_a, n);
 			strassen(&p[3 * n*n], b11, m2, n, n, stride_b, n);
 		}
 

@@ -35,14 +35,18 @@ int main(int argc, char *argv[])
 {
 	// print_processor_info();
 
-	printf("Testing matrix length : %u\n", MATRIX_LENGTH);
-	/* Wiki based implementation. */
-	// test_strassen_wiki(MATRIX_LENGTH);
+	/* Wiki based implementation. */	
+	for (unsigned int i = 16; i <= 8192; i <<= 1) {
+		printf("Testing matrix length : %u\n", i);
+		// TODO : Some code duplication can be avoided.
+		// But this is convenient right now.
 
-	/* Single pointer instead of double pointer matrix. */
-	// strassen_with_single_dim_ptr(MATRIX_LENGTH);
-
-	strassen_with_quad_layout(MATRIX_LENGTH);
+		// test_strassen_wiki(i);
+		// strassen_with_single_dim_ptr(i);
+		strassen_with_quad_layout(i);
+		// test_sequential_single_dim_ptr(i);
+		// test_two_dim_sequential(i);
+	}
 	
 	printf("Finished program execution.\n");	
 	return 0;

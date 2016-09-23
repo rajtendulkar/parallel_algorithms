@@ -105,7 +105,7 @@ typedef struct matquad
 } MatQuad;
 
 /* Print all the matrices */
-#define PRINT_OUTPUT
+// #define PRINT_OUTPUT
 
 /* 
  * Enable OpenMP Directives.
@@ -130,7 +130,7 @@ typedef struct matquad
 
 /* Verify strassen algorithm output against sequential algorithm. */
 #ifndef VERIFY_OUTPUT
-#define VERIFY_OUTPUT
+// #define VERIFY_OUTPUT
 #endif /* VERIFY_OUTPUT */
 
 /*
@@ -232,5 +232,7 @@ extern float *get_root_element(MatQuad *input_matrix);
 extern int verify_quad_output(float*seq_matrix, MatQuad *quad_matrix, unsigned int matrix_length);
 extern void print_matrix_two_dim(float **input_matrix, unsigned int length);
 extern void print_quad_layout_matrix(MatQuad *quad_matrix, unsigned int matrix_length);
+extern int test_sequential_single_dim_ptr(unsigned int matrix_length);
+extern int test_two_dim_sequential(unsigned int matrix_length);
 
 #endif /* _MATRIX_MUL_H */

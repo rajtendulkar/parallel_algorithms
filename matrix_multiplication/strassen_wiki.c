@@ -254,6 +254,82 @@ static void initialize_matrix_two_dim(float **input_matrix, unsigned int length)
 			input_matrix[i][j] = initializer++;
 }
 
+int test_two_dim_sequential(unsigned int matrix_length)
+{
+	int return_value = 0;
+	float **mat_a, **mat_b, **mat_c;
+	clock_t t1, t2, t3;
+
+	/* Allocate matrix A. */
+	mat_a = allocate_real_matrix_two_dim(matrix_length);
+	if (mat_a == NULL) {
+		printf("Error allocating memory for matrix A\n");
+		return_value = -1;
+		goto mat_a_alloc_fail;
+	}
+
+	/* Allocate matrix B. */
+	mat_b = allocate_real_matrix_two_dim(matrix_length);
+	if (mat_b == NULL) {
+		printf("Error allocating memory for matrix B\n");
+		return_value = -1;
+		goto mat_b_alloc_fail;
+	}
+
+	/* Allocate matrix C. */
+	mat_c = allocate_real_matrix_two_dim(matrix_length);
+	if (mat_c == NULL) {
+		printf("Error allocating memory for matrix C\n");
+		return_value = -1;
+		goto mat_c_alloc_fail;
+	}
+
+	initialize_matrix_two_dim(mat_a, matrix_length);
+	initialize_matrix_two_dim(mat_b, matrix_length);
+
+#ifdef PRINT_OUTPUT
+	printf("\n*********************\n");
+	printf("Matrix A : \n");
+	print_matrix_two_dim(mat_a, matrix_length);
+
+	printf("\n*********************\n");
+	printf("Matrix B : \n");
+	print_matrix_two_dim(mat_b, matrix_length);
+#endif /* PRINT_OUTPUT */
+
+	t1 = clock();
+
+	sequential_implementation_two_dim(mat_a, mat_b, mat_c, matrix_length);
+
+	t2 = clock();
+
+#ifdef PRINT_OUTPUT
+	printf("\n*********************\n");
+	printf("Matrix C : \n");
+	print_matrix_two_dim(mat_c, matrix_length);
+	printf("\n*********************\n");
+#endif /* PRINT_OUTPUT */
+
+	printf("Sequential : %f (seconds)\n", (double)(t2 - t1) / CLOCKS_PER_SEC);
+
+#ifdef PRINT_OUTPUT
+	printf("Matrix C : \n");
+	print_matrix_two_dim(mat_c, matrix_length);
+	printf("\n*********************\n");
+#endif /* PRINT_OUTPUT */
+
+	mat_c = free_real_matrix_two_dim(mat_c, matrix_length);
+
+mat_c_alloc_fail:
+	mat_b = free_real_matrix_two_dim(mat_b, matrix_length);
+
+mat_b_alloc_fail:
+	mat_a = free_real_matrix_two_dim(mat_a, matrix_length);
+
+mat_a_alloc_fail:
+	return return_value;
+}
+
 int test_strassen_wiki(unsigned int matrix_length)
 {
 	int return_value = 0;
